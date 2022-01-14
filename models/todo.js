@@ -1,7 +1,5 @@
-'use strict';
-const {
-  Model
-} = require('sequelize');
+"use strict";
+const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
   class todo extends Model {
     /**
@@ -17,15 +15,19 @@ module.exports = (sequelize, DataTypes) => {
         },
       });
     }
-  };
-  todo.init({
-    title: DataTypes.STRING,
-    description: DataTypes.STRING,
-    isCompleted: DataTypes.STRING,
-    idCategory: DataTypes.INTEGER
-  }, {
-    sequelize,
-    modelName: 'todo',
-  });
+  }
+  todo.init(
+    {
+      title: DataTypes.STRING,
+      description: DataTypes.STRING,
+      dueDate: DataTypes.DATE,
+      isCompleted: DataTypes.STRING,
+      idCategory: DataTypes.INTEGER,
+    },
+    {
+      sequelize,
+      modelName: "todo",
+    }
+  );
   return todo;
 };

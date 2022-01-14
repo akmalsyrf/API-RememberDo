@@ -3,7 +3,7 @@ const { todo } = require("../../models");
 exports.getAllTodos = async (req, res) => {
   try {
     const response = await todo.findAll({
-      order: [["id", "DESC"]],
+      order: [["dueDate", "ASC"]],
       attributes: { exclude: ["createdAt", "updatedAt"] },
     });
 
@@ -24,7 +24,7 @@ exports.getTodosByIdCategory = async (req, res) => {
   try {
     const response = await todo.findAll({
       where: { idCategory: req.params.idCategory },
-      order: [["id", "DESC"]],
+      order: [["dueDate", "ASC"]],
       attributes: { exclude: ["createdAt", "updatedAt"] },
     });
 
@@ -62,8 +62,8 @@ exports.getTodo = async (req, res) => {
 };
 
 exports.addTodo = async (req, res) => {
-  const { title, description, idCategory } = req.body;
-  const data = { title, description, isCompleted: "false", idCategory };
+  const { title, description, dueDate } = req.body;
+  const data = { title, description, dueDate, isCompleted: "false", idCategory: 1 };
   try {
     const response = await todo.create(data);
 
@@ -101,13 +101,13 @@ exports.updateTodo = async (req, res) => {
 
 exports.deleteTodo = async (req, res) => {
   try {
-    const response = await todo.destroy({
+    await todo.destroy({
       where: { id: req.params.id },
     });
 
     res.status(200).send({
       status: "success",
-      data: response,
+      dataId: req.params.id,
     });
   } catch (error) {
     console.log(error);

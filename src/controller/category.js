@@ -45,7 +45,7 @@ exports.deleteCategory = async (req, res) => {
 
     res.status(200).send({
       status: "success",
-      data: response,
+      data: req.params.id,
     });
   } catch (error) {
     console.log(error);

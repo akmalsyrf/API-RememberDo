@@ -14,6 +14,9 @@ module.exports = {
       description: {
         type: Sequelize.STRING,
       },
+      dueDate: {
+        type: Sequelize.DATE,
+      },
       isCompleted: {
         type: Sequelize.STRING,
       },
