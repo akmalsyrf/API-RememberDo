@@ -1,9 +1,15 @@
-const { todo } = require("../../models");
+const { todo, category } = require("../../models");
 
 exports.getAllTodos = async (req, res) => {
   try {
     const response = await todo.findAll({
       order: [["dueDate", "ASC"]],
+      include: [
+        {
+          model: category,
+          attributes: { exclude: ["id", "createdAt", "updatedAt"] },
+        },
+      ],
       attributes: { exclude: ["createdAt", "updatedAt"] },
     });
 
@@ -62,8 +68,8 @@ exports.getTodo = async (req, res) => {
 };
 
 exports.addTodo = async (req, res) => {
-  const { title, description, dueDate } = req.body;
-  const data = { title, description, dueDate, isCompleted: "false", idCategory: 1 };
+  const { title, description, dueDate, idCategory } = req.body;
+  const data = { title, description, dueDate, idCategory };
   try {
     const response = await todo.create(data);
 
